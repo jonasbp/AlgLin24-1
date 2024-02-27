@@ -38,11 +38,56 @@ def cifrar(msg,P):
     string_cifrada = para_string(matrix_cifrada)
     return string_cifrada
 
+def de_cifrar(msg,P):
+    '''
+    Uma função que recupera uma mensagem cifrada, recebida como entrada, e retorna a mensagem original. `P` é a matriz de permutação que realiza a cifra.
+    '''
+    matrix_base = para_one_hot(msg)
+    inverso_permutacao = np.linalg.inv(P)
+    matrix_decifrada = inverso_permutacao @ matrix_base
+    string_decifrada = para_string(matrix_decifrada)
+    return string_decifrada
 
-#Cria a matriz identidade P;
+def enigma(msg,P,E):
+    '''
+    Uma função que faz a cifra enigma na mensagem de entrada usando o cifrador `P` e o cifrador auxiliar `E`, ambos representados como matrizes de permutação.
+    '''
+    matrix_base = para_one_hot(msg)
+    matrix_permuta = E @ P
+    matrix_cifrada = matrix_permuta @ matrix_base
+    string_cifrada = para_string(matrix_cifrada)
+    return string_cifrada
+
+def de_enigma(msg,P,E):
+    '''
+    Uma função que recupera uma mensagem cifrada como enigma assumindo que ela foi cifrada com o usando o cifrador `P` e o cifrador auxiliar `E`, ambos representados como matrizes de permutação.
+    '''
+
+    matrix_base = para_one_hot(msg)
+    matrix_permuta = E @ P
+    inverso_permutacao = np.linalg.inv(matrix_permuta)
+    matrix_decifrada = inverso_permutacao @ matrix_base
+    string_decifrada = para_string(matrix_decifrada)
+    return string_decifrada
+
+
+
+# TESTA CIFRAR
 alfabeto = "abcdefghijklmnopqrstuvwxyz"
 matrix_permutacao = np.eye(len(alfabeto))
 #Permuta as linhas da matriz identidade P;
 np.random.shuffle(matrix_permutacao)
 
-print(cifrar("jonass",matrix_permutacao))
+cifrado = cifrar("novidade",matrix_permutacao)
+print(de_cifrar(cifrado,matrix_permutacao))
+
+# TESTA ENIGMA
+alfabeto = "abcdefghijklmnopqrstuvwxyz"
+matrix_permutacao = np.eye(len(alfabeto))
+matrix_permutacao_e = np.eye(len(alfabeto))
+#Permuta as linhas da matriz identidade P;
+np.random.shuffle(matrix_permutacao)
+
+enigma = enigma("novidadejonas",matrix_permutacao,matrix_permutacao_e)
+print(enigma)
+print(de_enigma(enigma,matrix_permutacao,matrix_permutacao_e))
