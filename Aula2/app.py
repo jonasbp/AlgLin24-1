@@ -29,3 +29,20 @@ def para_string(M):
 # string_matriz = para_one_hot("jonas")
 # matriz_string = para_string(string_matriz)
 
+def cifrar(msg,P):
+    '''
+    Uma função que aplica uma cifra simples em uma mensagem recebida como entrada e retorna a mensagem cifrada. `P` é a matriz de permutação que realiza a cifra.
+    '''
+    matrix_base = para_one_hot(msg)
+    matrix_cifrada = P @ matrix_base
+    string_cifrada = para_string(matrix_cifrada)
+    return string_cifrada
+
+
+#Cria a matriz identidade P;
+alfabeto = "abcdefghijklmnopqrstuvwxyz"
+matrix_permutacao = np.eye(len(alfabeto))
+#Permuta as linhas da matriz identidade P;
+np.random.shuffle(matrix_permutacao)
+
+print(cifrar("jonass",matrix_permutacao))
