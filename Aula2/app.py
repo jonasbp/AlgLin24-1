@@ -14,4 +14,18 @@ def para_one_hot(msg):
                 matrix[j,i] = 1
     return matrix
 
-print(para_one_hot("abc"))
+def para_string(M):
+    '''
+    Da matriz para letrinha.
+    Para converter mensagens da representação one-hot encoding para uma string legível.
+    '''
+    msg = ""
+    matrix = np.array(M)
+    alfabeto = "abcdefghijklmnopqrstuvwxyz"
+    for i in range(M.shape[1]):
+        msg += alfabeto[np.argmax(M[:, i])] #argmax retorna o indice do maior valor e uso para encontrar a letra correspondente
+    return msg
+
+# string_matriz = para_one_hot("jonas")
+# matriz_string = para_string(string_matriz)
+
