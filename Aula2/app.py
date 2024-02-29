@@ -88,6 +88,6 @@ matrix_permutacao_e = np.eye(len(alfabeto))
 #Permuta as linhas da matriz identidade P;
 np.random.shuffle(matrix_permutacao)
 
-enigma = enigma("novidadejonas",matrix_permutacao,matrix_permutacao_e)
+enigma = enigma("novidadejonass",matrix_permutacao,matrix_permutacao_e)
 print(enigma)
 print(de_enigma(enigma,matrix_permutacao,matrix_permutacao_e))
